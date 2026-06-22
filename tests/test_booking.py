@@ -75,4 +75,20 @@ def test_delete_booking(api, token):
     assert delete_response.status_code == 201
 
     get_response = api.get(f"/booking/{booking_id}")
+    new_func(get_response)
+
+def new_func(get_response):
     assert get_response.status_code == 404
+
+@allure.feature("Booking API")
+@allure.story("Create booking failed")
+@pytest.mark.negative
+def test_create_booking_failed_with_missing_required_field(api):
+    payload = {
+        "firstname": "Nori",
+        "lastname": "Lin"
+    }
+
+    response = api.post("/booking", json=payload)
+
+    assert response.status_code in [400, 500]
