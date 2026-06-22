@@ -92,3 +92,29 @@ def test_create_booking_failed_with_missing_required_field(api):
     response = api.post("/booking", json=payload)
 
     assert response.status_code in [400, 500]
+
+@allure.feature("Booking API")
+@allure.story("Update booking failed")
+@pytest.mark.negative
+def test_update_booking_failed_without_token(api, created_booking):
+    booking_id = created_booking
+    payload = updated_booking_payload()
+
+    response = api.put(
+        f"/booking/{booking_id}",
+        json=payload
+    )
+
+    assert response.status_code == 403
+    assert "Forbidden" in response.text
+
+@allure.feature("Booking API")
+@allure.story("Delete booking failed")
+@pytest.mark.negative
+def test_delete_booking_failed_without_token(api, created_booking):
+    booking_id = created_booking
+
+    response = api.delete(f"/booking/{booking_id}")
+
+    assert response.status_code == 403
+    assert "Forbidden" in response.text
