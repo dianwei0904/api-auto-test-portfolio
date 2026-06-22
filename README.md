@@ -77,6 +77,14 @@ python -m pip install -r requirements.txt
 
 ## Run Test Cases
 
+## Test Result
+
+![Pytest Result](screenshots/pytest_result.png)ß
+
+## Allure Report
+
+![Allure Report](screenshots/allure_report.png)
+
 Run all test cases:
 
 ```bash
