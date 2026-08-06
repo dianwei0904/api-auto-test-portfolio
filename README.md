@@ -1,172 +1,106 @@
-# RESTful API Automation Test Framework
+# REST API Automation Framework
 
-This is a portfolio project for API automation testing.
-The project uses Python, Pytest, Requests, and Allure Report to test RESTful API workflows, including authentication and CRUD operations.
+A maintainable API test framework for validating authentication and end-to-end booking workflows. The project separates HTTP operations, test payloads, shared fixtures, and assertions so the suite can be extended without duplicating request logic.
 
-## Project Purpose
+## What It Validates
 
-The purpose of this project is to demonstrate basic API automation testing skills, including:
+| Area | Coverage |
+|---|---|
+| Authentication | Successful login and invalid credentials |
+| Booking workflow | Create, read, update, and delete |
+| API contract | Status codes, response fields, and error messages |
+| Test lifecycle | Shared setup, authentication token, booking creation, and cleanup |
 
-* Building an API automation test framework
-* Sending API requests with Python Requests
-* Writing test cases with Pytest
-* Validating status code, response body, JSON fields, and error messages
-* Managing authentication token with Pytest fixtures
-* Generating visual test reports with Allure Report
+## Architecture
+
+```text
+Pytest Test Case
+      ↓
+Shared Fixtures
+      ↓
+Reusable API Client
+      ↓
+REST API
+      ↓
+Response Assertions
+```
+
+## Key Engineering Decisions
+
+- `ApiClient` centralizes URL construction, headers, sessions, and HTTP methods.
+- Pytest fixtures manage authentication and reusable test setup.
+- Booking payloads are separated from test logic.
+- CRUD scenarios are validated as a connected workflow rather than isolated requests.
+- Allure results provide reviewable execution evidence.
 
 ## Tech Stack
 
-* macOS
-* VS Code
-* Python
-* Pytest
-* Requests
-* Allure Report
-* RESTful API
-* Git / GitHub
-
-## Test Scope
-
-This project includes the following API test scenarios:
-
-* Login success
-* Login failed with wrong password
-* Create booking
-* Get booking
-* Update booking
-* Delete booking
+Python · Pytest · Requests · Allure · REST API
 
 ## Project Structure
 
 ```text
-api_auto_test_portfolio/
+api-auto-test-portfolio/
 ├── api_client.py
 ├── payloads/
 │   └── booking_payload.py
 ├── tests/
-│   ├── __init__.py
 │   ├── conftest.py
 │   ├── test_auth.py
 │   └── test_booking.py
+├── screenshots/
 ├── pytest.ini
 ├── requirements.txt
-├── README.md
-└── .gitignore
+└── README.md
 ```
 
-## Environment Setup
-
-### 1. Create a virtual environment
+## Run Locally
 
 ```bash
-python3 -m venv .venv
+python -m venv .venv
 ```
 
-### 2. Activate the virtual environment
+Windows PowerShell:
+
+```powershell
+.\.venv\Scripts\Activate.ps1
+python -m pip install -r requirements.txt
+python -m pytest -v
+```
+
+macOS / Linux:
 
 ```bash
 source .venv/bin/activate
-```
-
-### 3. Install dependencies
-
-```bash
-python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
-```
-
-## Run Test Cases
-
-## Test Result
-
-![Pytest Result](screenshots/pytest_result.png)ß
-
-## Allure Report
-
-![Allure Report](screenshots/allure_report.png)
-
-Run all test cases:
-
-```bash
-python -m pytest
-```
-
-Run tests with detailed output:
-
-```bash
 python -m pytest -v
 ```
 
 ## Generate Allure Report
 
-Run tests and generate Allure result files:
-
 ```bash
 python -m pytest --alluredir=allure-results
-```
-
-Open Allure report:
-
-```bash
 allure serve allure-results
 ```
 
-## Test Result Example
+## Test Evidence
 
-After running the test cases, the result should show passed test cases:
+![Pytest Result](screenshots/pytest_result.png)
 
-```text
-tests/test_auth.py::test_login_success PASSED
-tests/test_auth.py::test_login_failed_with_wrong_password PASSED
-tests/test_booking.py::test_create_booking PASSED
-tests/test_booking.py::test_get_created_booking PASSED
-tests/test_booking.py::test_update_booking PASSED
-tests/test_booking.py::test_delete_booking PASSED
-```
+![Allure Report](screenshots/allure_report.png)
 
-## Key Features
+## Portfolio Value
 
-### API Client Layer
+This project demonstrates practical API automation skills: reusable client design, fixture-based test lifecycle management, authentication handling, end-to-end CRUD validation, negative testing, and report-driven result review.
 
-The `api_client.py` file wraps common HTTP methods, including:
+## Interview Talking Points
 
-* GET
-* POST
-* PUT
-* DELETE
+- Why centralize requests in an API client instead of calling `requests` directly in every test?
+- How do fixtures reduce duplicated setup and improve cleanup reliability?
+- Which assertions are most important beyond checking only the HTTP status code?
+- How would this framework support multiple environments such as development, QA, and staging?
+- How would the suite be integrated into GitHub Actions or Jenkins?
 
-This makes the test cases cleaner and easier to maintain.
+## Resume Highlight
 
-### Test Data Management
-
-The `payloads/booking_payload.py` file manages request body data for booking-related API tests.
-
-This helps separate test data from test logic.
-
-### Pytest Fixture
-
-The `tests/conftest.py` file provides shared fixtures for:
-
-* API client initialization
-* Token generation
-* Test booking creation
-* Test data cleanup
-
-### Assertion Coverage
-
-The test cases validate:
-
-* HTTP status code
-* Response body
-* JSON field values
-* Error messages
-* Token-based authorization
-
-## Portfolio Summary
-
-This project demonstrates my ability to build and execute API automation tests using Python.
-It also shows my understanding of test structure, fixture usage, request payload management, API response validation, and test report generation.
-
-## Author
-
-Created by Nori as an API automation testing portfolio project.
+> Built a Python API automation framework with Pytest and Requests to validate authentication and end-to-end CRUD workflows, using reusable fixtures, separated payload management, response assertions, and Allure reporting.
